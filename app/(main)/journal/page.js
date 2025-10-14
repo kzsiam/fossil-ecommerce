@@ -1,175 +1,203 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import image1 from "@/public/images/journal1.png"
-import image2 from "@/public/images/journal2.png"
-import image3 from "@/public/images/faq.png"
-import style1 from "@/public/images/style1.png"
-import style2 from "@/public/images/style2.png"
-import style3 from "@/public/images/style3.png"
+import gsap from "gsap";
+
+import image1 from "@/public/images/journal1.png";
+import image2 from "@/public/images/journal2.png";
+import image3 from "@/public/images/faq.png";
+import style1 from "@/public/images/style1.png";
+import style2 from "@/public/images/style2.png";
+import style3 from "@/public/images/style3.png";
 
 export default function Journal() {
+  const titleRef = useRef(null);
+  const featuredRef = useRef(null);
+  const cardRefs = useRef([]);
 
-    return (
-        <div className='mt-20'>
-            <div className='text-start'>
-                <h1 className='text-7xl mx-20 font-bold'>Journal</h1>
-            </div>
-            <section className="w-full px-4 md:px-10 lg:px-20 py-12">
-                {/* Title */}
-                <h2 className="text-2xl md:text-3xl font-semibold mb-0">(Featured)</h2>
-
-                {/* Grid layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] gap-3">
-                    {/* ========== First Large Image ========== */}
-                    <Card className="!border-none !shadow-none !bg-transparent rounded-none overflow-hidden group">
-                        <div className="relative w-full h-96 md:h-[400px] lg:h-[650px] overflow-hidden">
-                            <Image
-                                src={image1}
-                                alt="Crafting Performance Wear"
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                sizes="(max-width: 1024px) 100vw, 66vw"
-                            />
-                        </div>
-
-                        <CardContent className="pt-2 flex justify-between items-center px-0">
-                            <div>
-                                <h3 className="font-semibold text-[16px] md:text-[16px]">
-                                    Crafting Performance Wear
-                                </h3>
-                                <p className="text-sm text-muted-foreground">04.01.2025</p>
-                            </div>
-                            <div className="flex items-center gap-1 text-sm font-medium mt-2">
-                                <ArrowRight size={16} />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* ========== Second Image ========== */}
-                    <Card className="!border-none !shadow-none !bg-transparent rounded-none overflow-hidden group">
-                        <div className="relative w-full h-72 md:h-[400px] lg:h-[350px] overflow-hidden">
-                            <Image
-                                src={image2}
-                                alt="Timeless Comfort"
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                sizes="(max-width: 1024px) 100vw, 33vw"
-                            />
-                        </div>
-
-                        <CardContent className="pt-2 flex justify-between items-center px-0">
-                            <div>
-                                <h3 className="font-semibold text-[16px] md:text-[16px]">
-                                    Timeless Comfort: The Fossil Way
-                                </h3>
-                                <p className="text-sm text-muted-foreground">05.04.2025</p>
-                            </div>
-                            <div className="flex items-center gap-1 text-sm font-medium mt-2">
-                                <ArrowRight size={16} />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    {/* ========== Third Image ========== */}
-                    <Card className="!border-none !shadow-none !bg-transparent rounded-none overflow-hidden group">
-                        <div className="relative w-full h-72 md:h-[400px] lg:h-[350px] overflow-hidden">
-                            <Image
-                                src={image3}
-                                alt="Value of Quality"
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                sizes="(max-width: 1024px) 100vw, 33vw"
-                            />
-                        </div>
-
-                        <CardContent className="pt-2 flex justify-between items-center px-0">
-                            <div>
-                                <h3 className="font-semibold text-[16px] md:text-[16px] leading-snug">
-                                    The Value of Quality: Investing in Timeless Fashion
-                                </h3>
-                                <p className="text-sm text-muted-foreground">06.12.2025</p>
-                            </div>
-                            <div className="flex items-center text-sm font-medium mt-2">
-                                <ArrowRight size={16} />
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-            </section>
-
-
-
-            <section className="w-full px-4 md:px-10 lg:px-20 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {/* ========== CARD 1 ========== */}
-                    <Card className="group overflow-hidden border-0 shadow-none  transition-all duration-300">
-                        <div className="relative w-full h-64 md:h-72 lg:h-80">
-                            <Image
-                                src={style1}
-                                alt="Sustainable Style"
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                        </div>
-                        <CardContent className="p-4 flex flex-col gap-2">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-sm md:text-base font-semibold leading-snug">
-                                    Sustainable Style: Fossil’s Commitment to Sustainability
-                                </h3>
-                                <ArrowRight className="w-5 h-5 text-gray-800 group-hover:translate-x-1 transition-transform duration-200" />
-                            </div>
-                            <p className="text-xs text-gray-500">03.04.2025</p>
-                        </CardContent>
-                    </Card>
-
-                    {/* ========== CARD 2 ========== */}
-                    <Card className="group overflow-hidden border-0 shadow-none  transition-all duration-300">
-                        <div className="relative w-full h-64 md:h-72 lg:h-80">
-                            <Image
-                                src={style2}
-                                alt="Fashion in Motion"
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                        </div>
-                        <CardContent className="p-4 flex flex-col gap-2">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-sm md:text-base font-semibold leading-snug">
-                                    Fashion in Motion
-                                </h3>
-                                <ArrowRight className="w-5 h-5 text-gray-800 group-hover:translate-x-1 transition-transform duration-200" />
-                            </div>
-                            <p className="text-xs text-gray-500">03.12.2025</p>
-                        </CardContent>
-                    </Card>
-
-                    {/* ========== CARD 3 ========== */}
-                    <Card className="group overflow-hidden border-0 shadow-none  transition-all duration-300">
-                        <div className="relative w-full h-64 md:h-72 lg:h-80">
-                            <Image
-                                src={style3}
-                                alt="Style that Keeps Up with Your Active Life"
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                        </div>
-                        <CardContent className="p-4 flex flex-col gap-2">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-sm md:text-base font-semibold leading-snug">
-                                    Style that Keeps Up with Your Active Life
-                                </h3>
-                                <ArrowRight className="w-5 h-5 text-gray-800 group-hover:translate-x-1 transition-transform duration-200" />
-                            </div>
-                            <p className="text-xs text-gray-500">04.22.2025</p>
-                        </CardContent>
-                    </Card>
-                </div>
-            </section>
-
-
-
-        </div>
+  useEffect(() => {
+    // Animate titles
+    gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }
     );
-};
+    gsap.fromTo(
+      featuredRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: "power3.out" }
+    );
+
+    // Hover animations for cards
+    cardRefs.current.forEach((cardObj) => {
+      if (!cardObj) return;
+
+      const { card, arrow } = cardObj;
+      const img = card.querySelector("img");
+      const border = card.querySelector(".hover-border");
+
+      card.addEventListener("mouseenter", () => {
+        // Image zoom
+        gsap.to(img, { scale: 1.1, duration: 0.4, ease: "power3.out" });
+        // Bottom border
+        gsap.to(border, { width: "100%", duration: 0.4, ease: "power3.out" });
+        // Slow arrow slide and reset
+        if (arrow) {
+          const tl = gsap.timeline();
+          tl.to(arrow, { x: 15, duration: 0.8, ease: "power3.out" }) // slower slide
+            .to(arrow, { x: 0, duration: 0.5, ease: "power3.inOut" }); // smooth return
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(img, { scale: 1, duration: 0.4, ease: "power3.out" });
+        gsap.to(border, { width: "0%", duration: 0.4, ease: "power3.inOut" });
+      });
+    });
+  }, []);
+
+  const featuredCards = [
+    {
+      img: image1,
+      title: "Crafting Performance Wear",
+      date: "04.01.2025",
+      height: "h-96 md:h-[400px] lg:h-[650px]",
+    },
+    {
+      img: image2,
+      title: "Timeless Comfort: The Fossil Way",
+      date: "05.04.2025",
+      height: "h-72 md:h-[400px] lg:h-[320px]",
+    },
+    {
+      img: image3,
+      title: "The Value of Quality: Investing in Timeless Fashion",
+      date: "06.12.2025",
+      height: "h-72 md:h-[400px] lg:h-[320px]",
+    },
+  ];
+
+  const lowerCards = [
+    {
+      img: style1,
+      title: "Sustainable Style: Fossil’s Commitment to Sustainability",
+      date: "03.04.2025",
+    },
+    {
+      img: style2,
+      title: "Fashion in Motion",
+      date: "03.12.2025",
+    },
+    {
+      img: style3,
+      title: "Style that Keeps Up with Your Active Life",
+      date: "04.22.2025",
+    },
+  ];
+
+  return (
+    <div className="mt-20">
+      {/* JOURNAL TITLE */}
+      <div className="text-start">
+        <h1 ref={titleRef} className="text-7xl mx-20 font-bold">
+          Journal
+        </h1>
+      </div>
+
+      {/* FEATURED SECTION */}
+      <section className="w-full px-4 md:px-10 lg:px-20 py-12">
+        <h2
+          ref={featuredRef}
+          className="text-2xl md:text-3xl font-semibold mb-0"
+        >
+          (Featured)
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr] gap-4 mt-6">
+          {featuredCards.map((card, idx) => (
+            <Card
+              key={idx}
+              ref={(el) =>
+                (cardRefs.current[idx] = { card: el, arrow: cardRefs.current[idx]?.arrow })
+              }
+              className="group !border-none !shadow-none !bg-transparent flex flex-col overflow-hidden relative rounded-none"
+            >
+              <div className={`relative w-full ${card.height} overflow-hidden`}>
+                <Image
+                  src={card.img}
+                  alt={card.title}
+                  fill
+                  className="object-cover transition-transform duration-700"
+                />
+              </div>
+
+              <CardContent className="pt-4 flex justify-between items-center px-0 relative">
+                <div>
+                  <h3 className="font-semibold text-[16px] leading-snug">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{card.date}</p>
+                </div>
+                <ArrowRight
+                  size={16}
+                  ref={(el) =>
+                    (cardRefs.current[idx] = { card: cardRefs.current[idx]?.card, arrow: el })
+                  }
+                  className="transition-transform duration-300"
+                />
+              </CardContent>
+
+              <div className="hover-border absolute left-0 bottom-0 h-[3px] bg-black w-0"></div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* LOWER 3 CARDS */}
+      <section className="w-full px-4 md:px-10 lg:px-20 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {lowerCards.map((card, idx) => (
+            <Card
+              key={idx + 3}
+              ref={(el) =>
+                (cardRefs.current[idx + 3] = { card: el, arrow: cardRefs.current[idx + 3]?.arrow })
+              }
+              className="group flex flex-col overflow-hidden border-0 shadow-none relative rounded-none"
+            >
+              <div className="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden">
+                <Image
+                  src={card.img}
+                  alt={`Style ${idx + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-700"
+                />
+              </div>
+
+              <CardContent className="p-4 flex flex-col gap-2 relative">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm md:text-base font-semibold leading-snug">
+                    {card.title}
+                  </h3>
+                  <ArrowRight
+                    ref={(el) =>
+                      (cardRefs.current[idx + 3] = {
+                        card: cardRefs.current[idx + 3]?.card,
+                        arrow: el,
+                      })
+                    }
+                    className="w-5 h-5 text-gray-800 transition-transform duration-300"
+                  />
+                </div>
+                <p className="text-xs text-gray-500">{card.date}</p>
+              </CardContent>
+
+              <div className="hover-border absolute left-0 bottom-0 h-[3px] bg-black w-0"></div>
+            </Card>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}

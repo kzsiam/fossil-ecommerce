@@ -3,6 +3,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Privacy() {
+
+  const domain = process.env.SHOPIFY_STORE_DOMAIN;
+  const token = process.env.SHOPIFY_ACCESS_TOKEN;
+  console.log(domain, token)
+
   return (
     <div className="mt-20 lg:mx-20 bg-white border-b-1 mb-30">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] ">
@@ -111,6 +116,9 @@ export default function Privacy() {
     </div>
   );
 }
+
+
+
 
 
 

@@ -1,11 +1,10 @@
-
 "use client"
 import Link from "next/link";
-// import Footer from "../components/footer/footer";
 import Footer from "@/components/footer/footer";
-
+import flag from "@/public/images/flag.png"
 import { useState } from "react";
-import { Menu, X, ShoppingCart, Search } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
+import Image from "next/image";
 
 
 export default function MainLayout({ children }) {
@@ -38,14 +37,11 @@ export default function MainLayout({ children }) {
               <Search size={20} />
             </button>
             <Link href="#">Account</Link>
-            <button className="text-sm">🇺🇸</button>
+            <button className="text-sm"><Image width={20} height={20} src={flag} alt=""></Image></button>
             <button aria-label="Cart" className="relative">
-              <ShoppingCart size={20} />
-              <span className="absolute -top-2 -right-2 text-xs bg-black text-white rounded-full w-4 h-4 flex items-center justify-center">
-                0
-              </span>
+              Cart(0)
             </button>
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Buttnp[on */}
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}
