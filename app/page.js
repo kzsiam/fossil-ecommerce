@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div>
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative  top-0 w-full h-screen overflow-hidden">
         {/* Background Video */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover"

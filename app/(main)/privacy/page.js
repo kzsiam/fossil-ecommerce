@@ -1,12 +1,15 @@
-
+"use client"
 
 import { Card, CardContent } from "@/components/ui/card";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function Privacy() {
+export default  function Privacy() {
 
-  const domain = process.env.SHOPIFY_STORE_DOMAIN;
-  const token = process.env.SHOPIFY_ACCESS_TOKEN;
-  console.log(domain, token)
+  
+
+
+
 
   return (
     <div className="mt-20 lg:mx-20 bg-white border-b-1 mb-30">

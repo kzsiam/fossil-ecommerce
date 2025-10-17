@@ -13,7 +13,7 @@ export default function MainLayout({ children }) {
   return (
     <div className="flex flex-col min-h-screen">
 
-      <header className="border-b relative z-50">
+      <header className="border-b fixed top-0 w-full z-50">
         {/* Navbar */}
         <nav className="flex items-center justify-between px-4 lg:px-12 py-4 bg-white">
           {/* Left: Links (Desktop only) */}
