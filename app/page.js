@@ -28,21 +28,27 @@ export default function Home() {
 
           <div className="text-white mb-5">
             <ul className="flex flex-col gap-4">
-              {["Shop", "New Arrivals", "Brand", "Journal", "Contact"].map((item) => (
+              {[
+                { name: "Shop", href: "/shop/categories/all" },
+                { name: "New Arrivals", href: "/shop/categories/new" },
+                { name: "Brand", href: "/brand" },
+                { name: "Journal", href: "/journal" },
+                { name: "Contact", href: "/contact" },
+              ].map((item) => (
                 <li
-                  key={item}
+                  key={item.name}
                   className="relative group overflow-hidden h-6 flex items-center justify-center"
                 >
                   {/* Dot */}
                   <span className="w-2 h-2 bg-white rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
 
                   {/* Text animation */}
-                  <Link href="#" className="inline-block relative">
+                  <Link href={item.href} className="inline-block relative">
                     <span className="block transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                      {item}
+                      {item.name}
                     </span>
                     <span className="block absolute top-full left-0 w-full text-center transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                      {item}
+                      {item.name}
                     </span>
                   </Link>
                 </li>

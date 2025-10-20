@@ -34,10 +34,10 @@ export default function CategoryPage() {
   };
 
   const handleProductClick = (title) => {
-  // Convert title → slug (e.g., "Pink Hodie" → "pink-hodie")
-  const slug = title.toLowerCase().replace(/\s+/g, "-");
-  router.push(`/shop/${slug}`);
-};
+    // Convert title → slug (e.g., "Pink Hodie" → "pink-hodie")
+    const slug = title.toLowerCase().replace(/\s+/g, "-");
+    router.push(`/shop/${slug}`);
+  };
 
   return (
     <main className="w-full mx-0 px-0">

@@ -48,7 +48,7 @@ export default function Footer() {
                                     Navigate
                                 </h4>
                                 <ul className="space-y-2 text-sm">
-                                    <li><Link href="/shop" className="hover:underline">Shop</Link></li>
+                                    <li><Link href="/shop/categories/all" className="hover:underline">Shop</Link></li>
                                     <li><Link href="/brand" className="hover:underline">Brand</Link></li>
                                     <li><Link href="/journal" className="hover:underline">Journal</Link></li>
                                     <li><Link href="/contact" className="hover:underline">Contact</Link></li>

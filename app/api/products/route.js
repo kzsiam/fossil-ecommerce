@@ -1,37 +1,5 @@
 
 
-// import axios from "axios";
-
-// export async function GET(request) {
-//   const { searchParams } = new URL(request.url);
-//   const category = searchParams.get("category");
-
-//   const url = `https://${process.env.SHOPIFY_STORE_DOMAIN}/admin/api/2024-07/products.json`;
-
-//   try {
-//     const response = await axios.get(url, {
-//       headers: {
-//         "X-Shopify-Access-Token": process.env.SHOPIFY_ACCESS_TOKEN,
-//       },
-//     });
-
-//     let products = response.data.products;
-
-//     // Filter by category (Shopify tags)
-//     if (category && category !== "all") {
-//       products = products.filter((p) =>
-//         p.tags.toLowerCase().includes(category.toLowerCase())
-//       );
-//     }
-
-//     return Response.json(products);
-//   } catch (error) {
-//     console.error("Error fetching products:", error.response?.data || error);
-//     return new Response("Error fetching products", { status: 500 });
-//   }
-// }
-
-
 import { NextResponse } from "next/server";
 import axios from "axios";
 

@@ -18,10 +18,10 @@ export default function MainLayout({ children }) {
         <nav className="flex items-center justify-between px-4 lg:px-12 py-4 bg-white">
           {/* Left: Links (Desktop only) */}
           <div className="hidden md:flex gap-6 text-sm font-medium">
-            <Link href="#">Shop</Link>
-            <Link href="#">Brand</Link>
-            <Link href="#">Journal</Link>
-            <Link href="#">Contact</Link>
+            <Link href="/shop/categories/all">Shop</Link>
+            <Link href="/brand">Brand</Link>
+            <Link href="journal">Journal</Link>
+            <Link href="/contact">Contact</Link>
           </div>
 
           {/* Center: Logo */}
@@ -55,10 +55,10 @@ export default function MainLayout({ children }) {
         {/* Mobile Menu Full Screen (below navbar) */}
         {isOpen && (
           <div className="fixed inset-x-0 top-[64px] bottom-0 bg-white flex flex-col items-center justify-center gap-8 text-lg font-medium md:hidden z-40">
-            <Link href="#" onClick={() => setIsOpen(false)}>Shop</Link>
-            <Link href="#" onClick={() => setIsOpen(false)}>Brand</Link>
-            <Link href="#" onClick={() => setIsOpen(false)}>Journal</Link>
-            <Link href="#" onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link href="/shop/categories/all" onClick={() => setIsOpen(false)}>Shop</Link>
+            <Link href="/brand" onClick={() => setIsOpen(false)}>Brand</Link>
+            <Link href="/journal" onClick={() => setIsOpen(false)}>Journal</Link>
+            <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
           </div>
         )}
       </header>
