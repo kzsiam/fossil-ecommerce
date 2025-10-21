@@ -13,17 +13,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
+import ProductCard from "@/components/ProductCard/page";
 
 export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
-  const { slug } = useParams(); // e.g., "pink-hodie"
+  const { slug } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (!slug) return;
 
-    // Convert slug (pink-hodie) → title (Pink Hodie)
+
     const title = slug.replace(/-/g, " ");
 
     const fetchProduct = async () => {
@@ -38,8 +40,29 @@ export default function ProductPage() {
     fetchProduct();
   }, [slug]);
 
+  useEffect(() => {
+    if (!product?.tags) return;
+
+    const fetchRelatedProducts = async () => {
+      try {
+        const res = await axios.get(`/api/products-by-tag?tag=${product.tags}`);
+        console.log(" API raw response:", res.data);
+
+        const filtered = res.data.filter((p) => p.id !== product.id);
+        setRelatedProducts(filtered);
+      } catch (err) {
+        console.error(" Error fetching related products:", err);
+      }
+    };
+
+    fetchRelatedProducts();
+  }, [product]);
+
+
+  console.log(product)
+
   if (!product) {
-    return <p className="p-8 text-gray-500">Loading...</p>;
+    return <p className="p-8 text-gray-500">No matching product here</p>;
   }
 
   const extractSection = (tag) => {
@@ -49,7 +72,7 @@ export default function ProductPage() {
   };
 
 
-  // Extract each section
+  console.log(product.tags)
   const description = extractSection("DESCRIPTION");
   const sizeChart = extractSection("SIZE");
   const returnPolicy = extractSection("RETURN_POLICY");
@@ -61,17 +84,17 @@ export default function ProductPage() {
 
   return (
     <div className="w-full">
-      
+
       <h1 className="text-sm font-semibold text-start px-4 lg:px-5 mt-24 mb-0 flex items-center gap-2">
-        <Link  href={"/"}>Home</Link>
+        <Link href={"/"}>Home</Link>
         <span>/</span>
         <Link className="capitalize" href={`/shop/categories/${product.tags}`}>{product.tags}</Link>
       </h1>
 
-      {/* ✅ Main Grid */}
+
       <main className="min-h-screen w-full bg-white grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-4 px-4 lg:px-5 py-4">
 
-        {/* LEFT SIDE - Mobile Carousel */}
+
         <div className="block sm:hidden w-full">
           <Swiper
             modules={[Navigation, Pagination]}
@@ -95,7 +118,7 @@ export default function ProductPage() {
           </Swiper>
         </div>
 
-        {/* LEFT SIDE - Tablet & Desktop Grid */}
+
         <div className="hidden sm:grid grid-cols-2 gap-2 w-full">
           {product.images.map((src, i) => (
             <div key={i} className="relative w-full h-[700px] overflow-hidden">
@@ -110,24 +133,25 @@ export default function ProductPage() {
           ))}
         </div>
 
-        {/* RIGHT SIDE - Product Details */}
+
         <div className="relative">
           <div className="sticky top-20">
-            {/* Product Title */}
-            <h2 className="text-3xl font-semibold mb-6">{product.title}</h2>
 
-            {/* Size Selector */}
-            <div className="mb-4">
+            <h2 className="text-3xl font-semibold">{product.title}</h2>
+             <h1 className="mb-6 font-semibold text-[12px]">${product.variants.find(v => v.title === selectedSize)?.price || product.variants?.[0]?.price}</h1>
+
+            <div className="mb-1">
               <p className="text-sm font-medium mb-2">Size</p>
-              <div className="flex gap-2 flex-wrap">
+
+              <div className="flex gap-1 flex-wrap mb-10">
                 {product.variants.map((size) => (
                   <button
                     key={size.title}
                     onClick={() => setSelectedSize(size.title)}
                     className={cn(
-                      "px-4 py-2 border border-gray-300 text-sm font-medium transition-all",
+                      "px-4 py-4 border border-gray-300 text-sm font-medium transition-all ",
                       selectedSize === size.title
-                        ? "bg-black text-white"
+                        ? "bg-black text-white border-black"
                         : "bg-transparent text-gray-800 hover:bg-gray-100"
                     )}
                   >
@@ -135,14 +159,26 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
+
+              {/* Add to Cart / Select Size button */}
+              {!selectedSize ? (
+                <button
+                  disabled
+                  className="w-full bg-gray-200 text-gray-500 py-3 rounded-sm cursor-not-allowed"
+                >
+                  Select Size
+                </button>
+              ) : (
+                <button className="w-full bg-black text-white py-3 rounded-sm hover:bg-gray-800 transition">
+                  Add to Cart
+                </button>
+              )}
             </div>
 
-            {/* Shop Pay Button */}
-            <Button className="bg-[#9b8cf3] text-white w-full text-lg py-6 mt-2 rounded-none hover:bg-[#8a7ce5]">
+            <Button className="bg-[#9b8cf3] text-white w-full text-lg py-6 mt-0 rounded-sm hover:bg-[#8a7ce5]">
               Shop Pay
             </Button>
 
-            {/* Accordions */}
             <Accordion type="single" collapsible className="w-full border-t border-gray-200 pt-4 mt-4">
               <AccordionItem value="description">
                 <AccordionTrigger>Description</AccordionTrigger>
@@ -169,6 +205,28 @@ export default function ProductPage() {
         </div>
 
       </main>
+
+      <div className="px-6 md:px-30  mt-30">
+        <h1 className="text-xl font-semibold"> More <span className="capitalize">{product.tags}s</span></h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full">
+          {relatedProducts.length === 0 ? (
+            <p className="text-gray-600 text-center w-full py-10">
+              No products found in this category.
+            </p>
+          ) : (
+            relatedProducts.map((relatedProduct) => {
+              const createdDate = new Date(product.created_at);
+              const today = new Date();
+              const diffDays = (today - createdDate) / (1000 * 60 * 60 * 24);
+              const isNew = diffDays <= 15;
+
+              return (
+                <ProductCard key={relatedProduct.id} product={relatedProduct} isNew={isNew} ></ProductCard>
+              );
+            })
+          )}
+        </div>
+      </div>
     </div>
 
   );
