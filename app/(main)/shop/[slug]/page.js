@@ -25,7 +25,6 @@ export default function ProductPage() {
   useEffect(() => {
     if (!slug) return;
 
-
     const title = slug.replace(/-/g, " ");
 
     const fetchProduct = async () => {
@@ -138,7 +137,7 @@ export default function ProductPage() {
           <div className="sticky top-20">
 
             <h2 className="text-3xl font-semibold">{product.title}</h2>
-             <h1 className="mb-6 font-semibold text-[12px]">${product.variants.find(v => v.title === selectedSize)?.price || product.variants?.[0]?.price}</h1>
+            <h1 className="mb-6 font-semibold text-[12px]">${product.variants.find(v => v.title === selectedSize)?.price || product.variants?.[0]?.price}</h1>
 
             <div className="mb-1">
               <p className="text-sm font-medium mb-2">Size</p>
@@ -170,7 +169,12 @@ export default function ProductPage() {
                 </button>
               ) : (
                 <button className="w-full bg-black text-white py-3 rounded-sm hover:bg-gray-800 transition">
-                  Add to Cart
+                  <div className="flex justify-between items-center px-4">
+                    <h1 className="text-sm font-medium">Add to Cart</h1>
+                    <h1 className="text-[12px] font-semibold">
+                      ${product.variants.find(v => v.title === selectedSize)?.price || product.variants?.[0]?.price}
+                    </h1>
+                  </div>
                 </button>
               )}
             </div>
