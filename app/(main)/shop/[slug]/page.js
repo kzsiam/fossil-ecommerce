@@ -14,13 +14,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard/page";
+import { useCart } from "@/app/context/cartContext";
 
 export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
+
   const { slug } = useParams();
   const [product, setProduct] = useState(null);
+
+  const {addToCart} = useCart()
 
   useEffect(() => {
     if (!slug) return;
@@ -168,7 +172,7 @@ export default function ProductPage() {
                   Select Size
                 </button>
               ) : (
-                <button className="w-full bg-black text-white py-3 rounded-sm hover:bg-gray-800 transition">
+                <button onClick={() => addToCart(product,selectedSize)} className="w-full bg-black text-white py-3 rounded-sm hover:bg-gray-800 transition">
                   <div className="flex justify-between items-center px-4">
                     <h1 className="text-sm font-medium">Add to Cart</h1>
                     <h1 className="text-[12px] font-semibold">

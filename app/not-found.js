@@ -12,10 +12,10 @@ export default function NotFound() {
   const buttonWrapperRef = useRef(null);
 
   useEffect(() => {
-    // Timeline for sequential animation
+ 
     const tl = gsap.timeline();
 
-    // Animate heading (404) from top
+
     tl.from(headingRef.current, {
       y: -50,
       opacity: 0,
@@ -23,7 +23,7 @@ export default function NotFound() {
       ease: "power3.out"
     });
 
-    // Animate paragraph
+
     tl.from(
       contentRef.current.querySelector("p"),
       {
@@ -32,10 +32,10 @@ export default function NotFound() {
         duration: 0.8,
         ease: "power3.out"
       },
-      "-=0.5" // overlap slightly
+      "-=0.5" 
     );
 
-    // Animate button wrapper
+   
     tl.from(buttonWrapperRef.current, {
       scale: 0.8,
       opacity: 0,

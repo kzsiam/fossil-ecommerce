@@ -8,13 +8,13 @@ import ProductCard from "@/components/ProductCard/page";
 
 export default function CategoryPage() {
   const [products, setProducts] = useState([]);
-  const [isSticky, setIsSticky] = useState(false); // 👈 scroll bg control
+  const [isSticky, setIsSticky] = useState(false); //  scroll bg control
   const router = useRouter();
   const { category } = useParams();
 
   const decodedCategory = category?.replace(/-/g, " ") || "all";
 
-  // 👉 Fetch products by category
+  //  Fetch products by category
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -27,7 +27,7 @@ export default function CategoryPage() {
     fetchProducts();
   }, [decodedCategory]);
 
-  // 👉 Detect scroll to toggle background
+  //  Detect scroll to toggle background
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 200) {

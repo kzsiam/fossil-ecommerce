@@ -3,9 +3,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/app/context/cartContext";
 
 export default function ProductCard({ product, isNew }) {
     const router = useRouter();
+    const { addToCart } = useCart()
 
     const handleProductClick = (title) => {
         console.log(title)
@@ -51,7 +53,10 @@ export default function ProductCard({ product, isNew }) {
 
                     <button
                         className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-300 bg-black text-white px-8 py-3 flex items-center justify-between gap-8 shadow-md"
-                        onClick={() => console.log(`Added ${product.title}`)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(product);
+                        }}
                     >
                         <span className="text-xs font-semibold tracking-wide">
                             Quick Add

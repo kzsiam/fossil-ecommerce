@@ -6,33 +6,34 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X, Search } from "lucide-react";
 import Image from "next/image";
 import gsap from "gsap";
+import { useCart } from "../context/cartContext";
 
 export default function MainLayout({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Refs for animation targets
+  const { cart, updateQuantity, removeFromCart, totalQuantity, clearCart } = useCart();
+
+  const total = cart.reduce(
+    (sum, item) => sum + parseFloat(item.price) * item.quantity,
+    0
+  );
+
+  // Refs for animation
   const drawerRef = useRef(null);
   const backdropRef = useRef(null);
 
-  // Animate drawer with GSAP
+  // Drawer animation with GSAP
   useEffect(() => {
     if (isCartOpen) {
-      // Slide drawer in
-      gsap.to(drawerRef.current, {
-        x: 0,
-        duration: 0.4,
-        ease: "power3.out",
-      });
+      gsap.to(drawerRef.current, { x: 0, duration: 0.4, ease: "power3.out" });
       gsap.to(backdropRef.current, {
         opacity: 1,
         duration: 0.3,
         pointerEvents: "auto",
       });
-      // Prevent scroll behind drawer
       document.body.style.overflow = "hidden";
     } else {
-      // Slide drawer out
       gsap.to(drawerRef.current, {
         x: "100%",
         duration: 0.4,
@@ -43,17 +44,23 @@ export default function MainLayout({ children }) {
         duration: 0.3,
         pointerEvents: "none",
       });
-      // Restore scroll
       document.body.style.overflow = "auto";
     }
   }, [isCartOpen]);
 
+  // Handle clear cart 
+  const handleClearCart = () => {
+    clearCart();
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
-      <header className={`border-b fixed top-0 w-full z-50 transition-all duration-300 ${
-    isCartOpen ? "bg-transparent border-b-0"  : "bg-white"
-  }`}>
+      <header
+        className={`border-b fixed top-0 w-full z-50 transition-all duration-300 ${
+          isCartOpen ? "bg-transparent border-b-0" : "bg-white"
+        }`}
+      >
         <nav className="flex items-center justify-between px-4 lg:px-12 py-4">
           {/* Left: Links */}
           <div className="hidden md:flex gap-6 text-sm font-medium">
@@ -86,10 +93,10 @@ export default function MainLayout({ children }) {
               aria-label="Cart"
               className="relative"
             >
-              Cart(0)
+              Cart({totalQuantity})
             </button>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu */}
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}
@@ -122,31 +129,84 @@ export default function MainLayout({ children }) {
       {/* Backdrop */}
       <div
         ref={backdropRef}
-        className="fixed inset-0 bg-black/40  z-40 opacity-0 pointer-events-none"
+        className="fixed inset-0 bg-black/40 z-40 opacity-0 pointer-events-none"
         onClick={() => setIsCartOpen(false)}
       ></div>
 
       {/* Drawer */}
       <div
         ref={drawerRef}
-        className="fixed top-0 right-0 h-full bg-white shadow-xl z-50 p-6 flex flex-col translate-x-full w-full md:w-[400px]"
+        className="fixed top-0 right-0 h-full bg-white shadow-xl z-50 flex flex-col translate-x-full w-full md:w-[400px]"
       >
-        <div className="flex justify-between items-center border-b pb-3 mb-4">
+        {/* Header */}
+        <div className="flex justify-between items-center border-b p-6">
           <h2 className="text-xl font-semibold">Your Cart</h2>
           <button onClick={() => setIsCartOpen(false)}>
             <X size={22} />
           </button>
         </div>
 
-        {/* Cart Items (placeholder) */}
-        <div className="flex-1 overflow-y-auto">
-          <p className="text-gray-500 text-sm">Your cart is empty.</p>
+        {/* Cart Items */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {cart.length === 0 ? (
+            <p>No items yet.</p>
+          ) : (
+            cart.map((item) => (
+              <div
+                key={item.id}
+                className="flex justify-between items-center border-b py-3"
+              >
+                <div>
+                  <h2 className="font-semibold">{item.title}</h2>
+                  <p className="text-sm text-gray-600">${item.price}</p>
+                  <div className="flex items-center gap-2 mt-2">
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      disabled={item.quantity <= 1}
+                      className="px-2 bg-gray-200 rounded"
+                    >
+                      -
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="px-2 bg-gray-200 rounded"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="text-red-500 text-sm"
+                >
+                  Remove
+                </button>
+              </div>
+            ))
+          )}
         </div>
 
-        {/* Checkout Button */}
-        <button className="mt-6 bg-black text-white py-3 rounded-md hover:bg-gray-800">
-          Checkout
-        </button>
+        {/* Footer */}
+        {cart.length > 0 && (
+          <div className="border-t p-6 bg-white sticky bottom-0">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="font-medium">Subtotal</h1>
+              <div className="font-semibold text-lg">${total.toFixed(2)}</div>
+            </div>
+
+            <button className="w-full bg-black text-white py-3 rounded-md hover:bg-gray-800">
+              Checkout
+            </button>
+            <button
+              onClick={handleClearCart}
+              className="w-full mt-2 bg-gray-200 text-black py-3 rounded-md hover:bg-gray-300"
+            >
+              Clear Cart
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main content */}

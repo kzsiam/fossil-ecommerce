@@ -20,7 +20,7 @@ export async function GET(req) {
 
     let products = res.data.products;
 
-    // ✅ Filter by category
+    //  Filter by category
     if (category === "new") {
       const now = new Date();
       products = products.filter((p) => {
@@ -32,7 +32,7 @@ export async function GET(req) {
       products = products.filter((p) => {
         if (!p.tags) return false;
 
-        // 🧩 Normalize and split tags
+        //  Normalize and split tags
         const tagsArray = p.tags
           .split(",")
           .map((t) => t.trim().toLowerCase());
